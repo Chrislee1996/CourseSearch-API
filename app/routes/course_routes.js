@@ -36,6 +36,17 @@ router.get('/courses', (req, res, next) => {
 		.catch(next)
 })
 
+router.get('/courses/mine', requireToken, (req, res, next) => {
+	Course.find({owner: req.user.id})
+		.populate('owner')
+		.then((courses) => {
+			return courses.map((course) => course.toObject())
+		})
+		.then((courses) => res.status(200).json({ courses: courses }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
+
 // // SHOW
 // // GET /courses/5a7db6c74d55bc51bdf39793
 router.get('/courses/:id', (req, res, next) => {
