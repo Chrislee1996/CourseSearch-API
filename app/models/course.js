@@ -16,9 +16,8 @@ const courseSchema = new mongoose.Schema(
 		},
         image: {
 			type: String,
-			required: true,
 		},
-        corseSubject: {
+        courseSubject: {
 			type: String,
 			required: true,
 		},
@@ -33,7 +32,6 @@ const courseSchema = new mongoose.Schema(
 		},
         datesOffered: {
 			type: String,
-			required: true,
 		},
         daysOfCourse: {
 			type: String,
@@ -41,7 +39,7 @@ const courseSchema = new mongoose.Schema(
             enum:['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 		},
         timeOfCourse: {
-			type: Number,
+			type: String,
 			required: true,
 		},
         credits: {
