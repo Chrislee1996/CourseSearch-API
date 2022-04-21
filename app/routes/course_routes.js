@@ -4,7 +4,7 @@ const express = require('express')
 const passport = require('passport')
 
 // pull in Mongoose model for examples
-const Example = require('../models/example')
+const Course = require('../models/course')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -27,7 +27,7 @@ const router = express.Router()
 
 // INDEX
 // GET /courses
-router.get('/courses', requireToken, (req, res, next) => {
+router.get('/courses', (req, res, next) => {
 	Course.find()
 		.then((courses) => {
 			return courses.map((course) => course.toObject())
