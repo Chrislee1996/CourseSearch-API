@@ -3,7 +3,6 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// pull in Mongoose model for examples
 const Course = require('../models/course')
 
 // this is a collection of methods that help us detect situations when we need
@@ -32,19 +31,17 @@ router.get('/courses', (req, res, next) => {
 		.then((courses) => {
 			return courses.map((course) => course.toObject())
 		})
-		// respond with status 200 and JSON of the examples
 		.then((courses) => res.status(200).json({ courses: courses }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
 
 // // SHOW
-// // GET /examples/5a7db6c74d55bc51bdf39793
+// // GET /courses/5a7db6c74d55bc51bdf39793
 router.get('/courses/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Course.findById(req.params.id)
 		.then(handle404)
-		// if `findById` is succesful, respond with 200 and "example" JSON
 		.then((course) => res.status(200).json({ course: course.toObject() }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
@@ -81,21 +78,18 @@ router.patch('/courses/:id', requireToken, removeBlanks, (req, res, next) => {
 		.catch(next)
 })
 
-// // DESTROY
-// // DELETE /examples/5a7db6c74d55bc51bdf39793
-// router.delete('/examples/:id', requireToken, (req, res, next) => {
-// 	Example.findById(req.params.id)
-// 		.then(handle404)
-// 		.then((example) => {
-// 			// throw an error if current user doesn't own `example`
-// 			requireOwnership(req, example)
-// 			// delete the example ONLY IF the above didn't throw
-// 			example.deleteOne()
-// 		})
-// 		// send back 204 and no content if the deletion succeeded
-// 		.then(() => res.sendStatus(204))
-// 		// if an error occurs, pass it to the handler
-// 		.catch(next)
-// })
+// DESTROY
+router.delete('/courses/:id', requireToken, (req, res, next) => {
+	Course.findById(req.params.id)
+		.then(handle404)
+		.then((course) => {
+			requireOwnership(req, course)
+			course.deleteOne()
+		})
+		// send back 204 and no content if the deletion succeeded
+		.then(() => res.sendStatus(204))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
 
 module.exports = router
