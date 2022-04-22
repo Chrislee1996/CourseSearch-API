@@ -38,7 +38,6 @@ const courseSchema = new mongoose.Schema(
         daysOfCourse: {
 			type: String,
 			required: true,
-            enum:['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 		},
         timeOfCourse: {
 			type: String,

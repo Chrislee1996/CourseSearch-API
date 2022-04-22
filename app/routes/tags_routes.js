@@ -31,7 +31,27 @@ router.post('/tag/:courseId', requireToken, removeBlanks, (req, res, next) => {
         })
 })
 
+router.delete('/tag/:id', requireToken,(req, res, next) => {
+    Tag.findById(req.params.id)
+    .then(handle404)
+    .then((tag) => {
+      // throw an error if current user doesn't own `favorite`
+      // requireOwnership(req, comment)
+      // delete the example ONLY IF the above didn't throw
+      tag.deleteOne()
+    })
+    // send back 204 and no content if the deletion succeeded
+    .then(() => res.sendStatus(204))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+    // const tagId = req.params.tagId
+    // const courseId = req.params.courseId
 
+    // Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
+    // function(err, course) {
+    //     console.log('course:', course)
+    // })
+})
 
 
 module.exports = router

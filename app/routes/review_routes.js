@@ -25,17 +25,6 @@ router.get('/reviews', (req, res, next) => {
 		.catch(next)
 })
 
-// router.get('/courses/:id', (req, res, next) => {
-// 	// req.params.id will be set based on the `:id` in the route
-// 	Review.findById(req.params.id)
-//         .populate('owner')
-// 		.then(handle404)
-// 		.then((review) => res.status(200).json({ review: review.toObject() }))
-// 		// if an error occurs, pass it to the handler
-// 		.catch(next)
-// })
-
-
 router.post('/:courseId', requireToken, removeBlanks, (req, res, next) => {
     const review = req.body.review
     const courseId = req.params.courseId
@@ -70,7 +59,7 @@ router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
 
 // DESTROY
 // DELETE /favorites/<id>
-router.delete('/:id', (req, res, next) => {
+router.delete('/reviews/:id', (req, res, next) => {
     Review.findById(req.params.id)
       .then(handle404)
       .then((review) => {
