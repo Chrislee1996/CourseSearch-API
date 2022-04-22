@@ -51,6 +51,20 @@ router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 // DELETE /favorites/<id>
 router.delete('/delete/:courseId/:reviewId', (req, res, next) => {
+	const reviewId = req.params.reviewId
+    const courseId = req.params.courseId
+    Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}},
+    function(err, course) {
+    console.log('review:', course)
+	})
+	.then(() => res.sendStatus(204))
+    .catch(next)
+  })
+
+
+module.exports = router
+
+
     // Review.findById(req.params.id)
     //   .then(handle404)
     //   .then((review) => {
@@ -63,14 +77,3 @@ router.delete('/delete/:courseId/:reviewId', (req, res, next) => {
     //   .then(() => res.sendStatus(204))
     //   // if an error occurs, pass it to the handler
     //   .catch(next)
-	const reviewId = req.params.reviewId
-    const courseId = req.params.courseId
-
-    Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}},
-    function(err, course) {
-    console.log('review:', course)
-	})
-  })
-
-
-module.exports = router

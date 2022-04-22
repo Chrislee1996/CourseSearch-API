@@ -32,6 +32,20 @@ router.post('/tag/:courseId', requireToken, removeBlanks, (req, res, next) => {
 })
 
 router.delete('/delete/:courseId/:tagId', requireToken,(req, res, next) => {
+    const tagId = req.params.tagId
+    const courseId = req.params.courseId
+    Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
+    function(err, course) {
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})
+
+
+module.exports = router
+
+
+
     // Tag.findById(req.params.id)
     // .then(handle404)
     // .then((tag) => {
@@ -44,25 +58,3 @@ router.delete('/delete/:courseId/:tagId', requireToken,(req, res, next) => {
     // .then(() => res.sendStatus(204))
     // // if an error occurs, pass it to the handler
     // .catch(next)
-    const tagId = req.params.tagId
-    const courseId = req.params.courseId
-
-    Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
-    function(err, course) {
-    console.log('course:', course)
-    })
-
-})
-
-
-module.exports = router
-
-
-
-    // const tagId = req.params.tagId
-    // const courseId = req.params.courseId
-
-    // Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
-    // function(err, course) {
-    //     console.log('course:', course)
-    // })
