@@ -8,6 +8,7 @@ const handle404 = customErrors.handle404
 const requireOwnership = customErrors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
 const removeBlanks = require('../../lib/remove_blank_fields')
+const review = require('../models/review')
 
 const router = express.Router()
 
@@ -15,37 +16,36 @@ const router = express.Router()
 /******************** ROUTES *******************/
 
 
-router.post('/comments/:courseId', (req, res, next) => {
+router.post('/comments/:reviewId', (req, res, next) => {
     // get our review from req.body
     const comment = req.body.comment
     // get our reviewId from req.params.id
-    const courseId = req.params.courseId
-    Course.findById(courseId)
+    const reviewId = req.params.reviewId
+    Review.findById(reviewId)
         // handle what happens if no review is found
         .then(handle404)
-        .then(course => {
-            course.comments.push(comment)
-            return course.save()
+        .then(review => {
+            review.comments.push(comment)
+            return review.save()
         })
-        .then(course => res.status(201).json({ course: course }))
+        .then(review => res.status(201).json({ review: review }))
         // catch errors and send to the handler
         .catch(next)
 })
 
 
-router.patch('/comments/:courseId/:commentId', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/comments/:reviewId/:commentId', requireToken, removeBlanks, (req, res, next) => {
     const commentId = req.params.commentId
-    const courseId = req.params.courseId
+    const reviewId = req.params.reviewId
 
-    Course.findById(courseId)
+    Review.findById(reviewId)
         .then(handle404)
-        .then(course => {
-            const theComment = course.comments.id(commentId)
-            console.log('this is the original comment', theComment)
-            requireOwnership(req, course)
+        .then(review => {
+            const theComment = review.comments.id(commentId)
+            requireOwnership(req, review)
             theComment.set(req.body.comment)
 
-            return course.save()
+            return review.save()
         })
         .then(() => res.sendStatus(204))
         .catch(next)
