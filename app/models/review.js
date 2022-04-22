@@ -1,10 +1,16 @@
 const mongoose= require('mongoose')
 
 
-const commentSchema = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema({
     note: {
         type:String,
         required:true
+    },
+    rating: {
+        type: Number,
+        min:0,
+        max:10,
+        default:5
     },
     owner: {
         type: mongoose.Schema.Types.ObjectID,
@@ -14,4 +20,4 @@ const commentSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = commentSchema
+module.exports = reviewSchema

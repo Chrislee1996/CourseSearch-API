@@ -17,6 +17,10 @@ const courseSchema = new mongoose.Schema(
         image: {
 			type: String,
 		},
+        courseLink: {
+            type: String,
+            required:true,
+        },
         courseSubject: {
 			type: String,
 			required: true,
@@ -45,7 +49,10 @@ const courseSchema = new mongoose.Schema(
         credits: {
 			type: Number
 		},
-        comments:[commentSchema],
+        tags: [ {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Tags'
+        }],
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
