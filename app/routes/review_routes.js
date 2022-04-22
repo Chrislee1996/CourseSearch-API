@@ -59,19 +59,26 @@ router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
 
 // DESTROY
 // DELETE /favorites/<id>
-router.delete('/reviews/:id', (req, res, next) => {
-    Review.findById(req.params.id)
-      .then(handle404)
-      .then((review) => {
-        // throw an error if current user doesn't own `favorite`
-        // requireOwnership(req, comment)
-        // delete the example ONLY IF the above didn't throw
-        review.deleteOne()
-      })
-      // send back 204 and no content if the deletion succeeded
-      .then(() => res.sendStatus(204))
-      // if an error occurs, pass it to the handler
-      .catch(next)
+router.delete('/delete/:courseId/:reviewId', (req, res, next) => {
+    // Review.findById(req.params.id)
+    //   .then(handle404)
+    //   .then((review) => {
+    //     // throw an error if current user doesn't own `favorite`
+    //     // requireOwnership(req, comment)
+    //     // delete the example ONLY IF the above didn't throw
+    //     review.deleteOne()
+    //   })
+    //   // send back 204 and no content if the deletion succeeded
+    //   .then(() => res.sendStatus(204))
+    //   // if an error occurs, pass it to the handler
+    //   .catch(next)
+	const reviewId = req.params.reviewId
+    const courseId = req.params.courseId
+
+    Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}},
+    function(err, course) {
+    console.log('review:', course)
+	})
   })
 
 
