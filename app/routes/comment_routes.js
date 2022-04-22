@@ -52,26 +52,21 @@ router.patch('/comments/:courseId/:commentId', requireToken, removeBlanks, (req,
 
 })
 
-// DELETE -> delete a review
-// DELETE /reviews/<productId>/<reviewId>
-router.delete('/reviews/:productId/:reviewId', requireToken,(req, res, next) => {
-    // saving both ids to variables for easy ref later
-    const reviewId = req.params.reviewId
-    const productId = req.params.productId
+router.delete('/comments/:courseId/:commentId', requireToken,(req, res, next) => {
+    const commentId = req.params.commentId
+    const courseId = req.params.courseId
     // find the product in the db
-    Product.findById(productId)
+    Course.findById(courseId)
 
         // if product not found throw 404
         .then(handle404)
-        .then(product => {
-            // get the specific subdocument by its id
-            const theReview = product.reviews.id(reviewId)
-            requireOwnership(req, product)
+        .then(course => {
+            const theComment = course.comments.id(commentId)
+            requireOwnership(req, course)
             // call remove on the review we got on the line above requireOwnership
-            theReview.remove()
-
+            theComment.remove()
             // return the saved product
-            return product.save()
+            return course.save()
         })
         // send 204 no content
         .then(() => res.sendStatus(204))
