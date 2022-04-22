@@ -1,7 +1,7 @@
 // import our dependecies, middleware and models 
 const express = require('express')
 const passport = require('passport')
-const Course = require('../models/course')
+const Review = require('../models/review')
 const customErrors = require('../../lib/custom_errors')
 
 const handle404 = customErrors.handle404

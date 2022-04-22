@@ -2,6 +2,7 @@
 const express = require('express')
 const passport = require('passport')
 const Course = require('../models/course')
+const Review = require('../models/review')
 const customErrors = require('../../lib/custom_errors')
 
 const handle404 = customErrors.handle404
@@ -14,64 +15,69 @@ const router = express.Router()
 
 /******************** ROUTES *******************/
 
+router.get('/reviews', (req, res, next) => {
+	Review.find()
+		.then((reviews) => {
+			return reviews.map((review) => review.toObject())
+		})
+		.then((reviews) => res.status(200).json({ reviews: reviews }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
 
-router.post('/comments/:courseId', (req, res, next) => {
-    // get our review from req.body
-    const comment = req.body.comment
-    // get our reviewId from req.params.id
-    const courseId = req.params.courseId
-    Course.findById(courseId)
-        // handle what happens if no review is found
-        .then(handle404)
-        .then(course => {
-            course.comments.push(comment)
-            return course.save()
-        })
-        .then(course => res.status(201).json({ course: course }))
-        // catch errors and send to the handler
-        .catch(next)
+router.get('/reviews/:id', (req, res, next) => {
+	// req.params.id will be set based on the `:id` in the route
+	Review.findById(req.params.id)
+        .populate('owner')
+		.then(handle404)
+		.then((review) => res.status(200).json({ review: review.toObject() }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
+
+router.post('/reviews/', requireToken, (req, res, next) => {
+	req.body.review.owner = req.user.id
+	Review.create(req.body.review)
+		.then((review) => {
+			res.status(201).json({ review: review.toObject() })
+		})
+		.catch(next)
+})
+
+router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
+	delete req.body.review.owner
+	Review.findById(req.params.id)
+		.then(handle404)
+		.then((review) => {
+			// pass the `req` object and the Mongoose record to `requireOwnership`
+			// it will throw an error if the current user isn't the owner
+			requireOwnership(req, review)
+			// pass the result of Mongoose's `.update` to the next `.then`
+			return review.updateOne(req.body.review)
+		})
+		// if that succeeded, return 204 and no JSON
+		.then(() => res.sendStatus(204))
+		// if an error occurs, pass it to the handler
+		.catch(next)
 })
 
 
-router.patch('/comments/:courseId/:commentId', requireToken, removeBlanks, (req, res, next) => {
-    const commentId = req.params.commentId
-    const courseId = req.params.courseId
-
-    Course.findById(courseId)
-        .then(handle404)
-        .then(course => {
-            const theComment = course.comments.id(commentId)
-            console.log('this is the original comment', theComment)
-            requireOwnership(req, course)
-            theComment.set(req.body.comment)
-
-            return course.save()
-        })
-        .then(() => res.sendStatus(204))
-        .catch(next)
-
-})
-
-router.delete('/comments/:courseId/:commentId', requireToken,(req, res, next) => {
-    const commentId = req.params.commentId
-    const courseId = req.params.courseId
-    // find the product in the db
-    Course.findById(courseId)
-
-        // if product not found throw 404
-        .then(handle404)
-        .then(course => {
-            const theComment = course.comments.id(commentId)
-            requireOwnership(req, course)
-            // call remove on the review we got on the line above requireOwnership
-            theComment.remove()
-            // return the saved product
-            return course.save()
-        })
-        // send 204 no content
-        .then(() => res.sendStatus(204))
-        .catch(next)
-})
+// DESTROY
+// DELETE /favorites/<id>
+router.delete('/reviews/:id', (req, res, next) => {
+    Review.findById(req.params.id)
+      .then(handle404)
+      .then((review) => {
+        // throw an error if current user doesn't own `favorite`
+        // requireOwnership(req, comment)
+        // delete the example ONLY IF the above didn't throw
+        review.deleteOne()
+      })
+      // send back 204 and no content if the deletion succeeded
+      .then(() => res.sendStatus(204))
+      // if an error occurs, pass it to the handler
+      .catch(next)
+  })
 
 
 module.exports = router

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-const commentSchema = require('./comment')
-
 const {Schema, model} = mongoose
 
 const courseSchema = new mongoose.Schema(

@@ -1,4 +1,5 @@
 const mongoose= require('mongoose')
+const commentSchema = require('./comment')
 
 
 const reviewSchema = new mongoose.Schema({
@@ -16,8 +17,9 @@ const reviewSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User', 
     },
+    comments: [commentSchema]
 },{
     timestamps: true
 })
 
-module.exports = reviewSchema
+module.exports = mongoose.model('Review', reviewSchema)
