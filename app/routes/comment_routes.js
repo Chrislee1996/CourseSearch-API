@@ -33,21 +33,19 @@ router.post('/comments/:courseId', (req, res, next) => {
 })
 
 
-// UPDATE
-// PATCH /reviews/<product>/<review_id>
-router.patch('/reviews/:productId/:reviewId', requireToken, removeBlanks, (req, res, next) => {
-    const reviewId = req.params.reviewId
-    const productId = req.params.productId
+router.patch('/comments/:courseId/:commentId', requireToken, removeBlanks, (req, res, next) => {
+    const commentId = req.params.commentId
+    const courseId = req.params.courseId
 
-    Product.findById(productId)
+    Course.findById(courseId)
         .then(handle404)
-        .then(product => {
-            const theReview = product.reviews.id(reviewId)
-            console.log('this is the original review', theReview)
-            requireOwnership(req, product)
-            theReview.set(req.body.review)
+        .then(course => {
+            const theComment = course.comments.id(commentId)
+            console.log('this is the original comment', theComment)
+            requireOwnership(req, course)
+            theComment.set(req.body.comment)
 
-            return product.save()
+            return course.save()
         })
         .then(() => res.sendStatus(204))
         .catch(next)
