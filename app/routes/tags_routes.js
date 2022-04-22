@@ -16,7 +16,7 @@ const router = express.Router()
 /******************** ROUTES *******************/
 
 
-router.post('/:courseId', requireToken, removeBlanks, (req, res, next) => {
+router.post('/tag/:courseId', requireToken, removeBlanks, (req, res, next) => {
     const tag = req.body.tag
     const courseId = req.params.courseId
 
@@ -31,15 +31,7 @@ router.post('/:courseId', requireToken, removeBlanks, (req, res, next) => {
         })
 })
 
-router.delete('/delete/:courseId/:tagId', requireToken,(req, res, next) => {
-    const tagId = req.params.tagId
-    const courseId = req.params.courseId
 
-    Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
-    function(err, course) {
-        console.log('course', course)
-    })
-})
 
 
 module.exports = router
