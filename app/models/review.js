@@ -7,7 +7,13 @@ const reviewSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    rating: {
+    courseRating: {
+        type: Number,
+        min:0,
+        max:10,
+        default:5
+    },
+    professorRating: {
         type: Number,
         min:0,
         max:10,

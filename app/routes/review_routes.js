@@ -35,13 +35,19 @@ router.get('/reviews/:id', (req, res, next) => {
 		.catch(next)
 })
 
-router.post('/reviews/', requireToken, (req, res, next) => {
-	req.body.review.owner = req.user.id
-	Review.create(req.body.review)
-		.then((review) => {
-			res.status(201).json({ review: review.toObject() })
-		})
-		.catch(next)
+
+router.post('/:courseId', requireToken, removeBlanks, (req, res, next) => {
+    const review = req.body.review
+    const courseId = req.params.courseId
+    Course.findById(courseId)
+        .then(course => {
+            Review.create(review)
+                .then((review) => {
+                    course.reviews.push(review)
+                    course.save()
+                    res.status(201).json({ review: review.toObject() })
+                })
+        })
 })
 
 router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
@@ -51,7 +57,7 @@ router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
 		.then((review) => {
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
-			requireOwnership(req, review)
+			// requireOwnership(req, review)
 			// pass the result of Mongoose's `.update` to the next `.then`
 			return review.updateOne(req.body.review)
 		})

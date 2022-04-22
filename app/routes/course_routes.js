@@ -4,7 +4,7 @@ const express = require('express')
 const passport = require('passport')
 
 const Course = require('../models/course')
-
+const Review = require('../models/review')
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
 const customErrors = require('../../lib/custom_errors')
@@ -57,6 +57,16 @@ router.get('/courses/:id', (req, res, next) => {
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
+
+router.get('/courses/:id', (req, res, next) => {
+	// req.params.id will be set based on the `:id` in the route
+	Course.findById(req.params.id)
+		.then(handle404)
+		.then((course) => res.status(200).json({ course: course.toObject() }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
+
 
 // // CREATE
 // // POST /courses

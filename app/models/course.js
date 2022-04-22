@@ -51,6 +51,10 @@ const courseSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Tags'
         }],
+		reviews: [ {
+			type: mongoose.Schema.Types.ObjectId,
+            ref: 'Reviews'
+		}],
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',

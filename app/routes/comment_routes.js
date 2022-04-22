@@ -42,7 +42,7 @@ router.patch('/comments/:reviewId/:commentId', requireToken, removeBlanks, (req,
         .then(handle404)
         .then(review => {
             const theComment = review.comments.id(commentId)
-            requireOwnership(req, review)
+            // requireOwnership(req, review)
             theComment.set(req.body.comment)
 
             return review.save()
@@ -62,7 +62,7 @@ router.delete('/comments/:reviewId/:commentId', requireToken,(req, res, next) =>
         .then(handle404)
         .then(review => {
             const theComment = review.comments.id(commentId)
-            requireOwnership(req, review)
+            // requireOwnership(req, review)
             // call remove on the review we got on the line above requireOwnership
             theComment.remove()
             // return the saved product
