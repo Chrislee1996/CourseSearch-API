@@ -15,15 +15,6 @@ const router = express.Router()
 
 /******************** ROUTES *******************/
 
-router.get('/reviews', (req, res, next) => {
-	Review.find()
-		.then((reviews) => {
-			return reviews.map((review) => review.toObject())
-		})
-		.then((reviews) => res.status(200).json({ reviews: reviews }))
-		// if an error occurs, pass it to the handler
-		.catch(next)
-})
 
 router.post('/:courseId', requireToken, removeBlanks, (req, res, next) => {
     const review = req.body.review
