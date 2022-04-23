@@ -31,7 +31,7 @@ router.post('/tag/:courseId', requireToken, removeBlanks, (req, res, next) => {
         })
 })
 
-router.delete('/delete/:courseId/:tagId', requireToken,(req, res, next) => {
+router.delete('/delete/:courseId/:tagId', requireToken, (req, res, next) => {
     const tagId = req.params.tagId
     const courseId = req.params.courseId
     Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
