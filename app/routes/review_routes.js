@@ -50,12 +50,10 @@ router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
 
 // DESTROY
 // DELETE /favorites/<id>
-router.delete('/delete/review/:courseId/:reviewId', (req, res, next) => {
+router.delete('/delete/review/:courseId/:reviewId', requireToken, (req, res, next) => {
 	const reviewId = req.params.reviewId
     const courseId = req.params.courseId
-    Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}},
-    function(err, course) {
-	})
+    Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}})
 	.then(() => res.sendStatus(204))
     .catch(next)
   })

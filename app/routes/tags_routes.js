@@ -34,10 +34,10 @@ router.post('/tag/:courseId', requireToken, removeBlanks, (req, res, next) => {
 router.delete('/delete/:courseId/:tagId', requireToken, (req, res, next) => {
     const tagId = req.params.tagId
     const courseId = req.params.courseId
-    Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
-    function(err, course) {
-    console.log('review:', course)
-    })
+    // const tag = await Tag.findOne({tagId})
+    // await tag.remove()
+    // await Course.updateMany({'tagId': tag.courses}, {$pull: {tags:tag._id}})
+    Course.updateOne({_id: courseId}, {$pull: {tags:tagId}})
     .then(() => res.sendStatus(204))
     .catch(next)
 })
