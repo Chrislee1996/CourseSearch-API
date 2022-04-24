@@ -44,7 +44,8 @@ const courseSchema = new mongoose.Schema(
 			required: true,
 		},
         credits: {
-			type: Number
+			type: Boolean,
+			required:true
 		},
         tags: [ {
             type: mongoose.Schema.Types.ObjectId,
@@ -61,8 +62,17 @@ const courseSchema = new mongoose.Schema(
 	},
 	{
 		timestamps: true,
+		toObject: {virtuals: true},
+		toJSON: {virtuals: true}
 	}
 )
 
+courseSchema.virtual('offerCredits').get(function() {
+	if (this.credits === true) {
+		return 'College credits offered'
+	} else if (this.credits === false) {
+		return 'Does not offere college credit'
+	}
+})
 
 module.exports = mongoose.model('Course', courseSchema)
