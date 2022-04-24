@@ -36,6 +36,168 @@ router.get('/courses', (req, res, next) => {
 		.catch(next)
 })
 
+router.get('/courses/computerprogramming', (req,res,next) => {
+	Course.find({courseSubject:'Programming'})
+		.then((programming)=> {
+			return programming.map((programming) => programming.toObject())
+		})	
+		.then((programming) => res.status(200).json( {programming: programming}))
+		.catch(next)
+})
+
+router.get('/courses/art', (req,res,next) => {
+	Course.find({courseSubject:'Art'})
+		.then((art)=> {
+			return art.map((art) => art.toObject())
+		})	
+		.then((art) => res.status(200).json( {art: art}))
+		.catch(next)
+})
+
+router.get('/courses/biology', (req,res,next) => {
+	Course.find({courseSubject:'Biology'})
+		.then((biology)=> {
+			return biology.map((biology) => biology.toObject())
+		})	
+		.then((biology) => res.status(200).json( {biology: biology}))
+		.catch(next)
+})
+
+router.get('/courses/chemistry', (req,res,next) => {
+	Course.find({courseSubject:'Chemistry'})
+		.then((chemistry)=> {
+			return chemistry.map((chemistry) => chemistry.toObject())
+		})	
+		.then((chemistry) => res.status(200).json( {chemistry: chemistry}))
+		.catch(next)
+})
+
+router.get('/courses/business', (req,res,next) => {
+	Course.find({courseSubject:'Business'})
+		.then((business)=> {
+			return business.map((business) => business.toObject())
+		})	
+		.then((business) => res.status(200).json( {business: business}))
+		.catch(next)
+})
+
+router.get('/courses/dataanalysis', (req,res,next) => {
+	Course.find({courseSubject:'Data Analysis'})
+		.then((data)=> {
+			return data.map((data) => data.toObject())
+		})	
+		.then((data) => res.status(200).json( {data: data}))
+		.catch(next)
+})
+
+router.get('/courses/design', (req,res,next) => {
+	Course.find({courseSubject:'Design'})
+		.then((design)=> {
+			return design.map((design) => design.toObject())
+		})	
+		.then((design) => res.status(200).json( {design: design}))
+		.catch(next)
+})
+
+router.get('/courses/education', (req,res,next) => {
+	Course.find({courseSubject:'Education'})
+		.then((education)=> {
+			return education.map((education) => education.toObject())
+		})	
+		.then((education) => res.status(200).json( {education: education}))
+		.catch(next)
+})
+
+router.get('/courses/engineering', (req,res,next) => {
+	Course.find({courseSubject:'Engineering'})
+		.then((engineering)=> {
+			return engineering.map((engineering) => engineering.toObject())
+		})	
+		.then((engineering) => res.status(200).json( {engineering: engineering}))
+		.catch(next)
+})
+
+router.get('/courses/healthcare', (req,res,next) => {
+	Course.find({courseSubject:'Healthcare'})
+		.then((healthcare)=> {
+			return healthcare.map((healthcare) => healthcare.toObject())
+		})	
+		.then((healthcare) => res.status(200).json( {healthcare: healthcare}))
+		.catch(next)
+})
+
+router.get('/courses/history', (req,res,next) => {
+	Course.find({courseSubject:'History'})
+		.then((history)=> {
+			return history.map((history) => history.toObject())
+		})	
+		.then((history) => res.status(200).json( {history: history}))
+		.catch(next)
+})
+
+router.get('/courses/language', (req,res,next) => {
+	Course.find({courseSubject:'Language'})
+		.then((language)=> {
+			return language.map((language) => language.toObject())
+		})	
+		.then((language) => res.status(200).json( {language: language}))
+		.catch(next)
+})
+
+router.get('/courses/law', (req,res,next) => {
+	Course.find({courseSubject:'Law'})
+		.then((law)=> {
+			return law.map((law) => law.toObject())
+		})	
+		.then((law) => res.status(200).json( {law: law}))
+		.catch(next)
+})
+
+router.get('/courses/literature', (req,res,next) => {
+	Course.find({courseSubject:'Literature'})
+		.then((literature)=> {
+			return literature.map((literature) => literature.toObject())
+		})	
+		.then((literature) => res.status(200).json( {literature: literature}))
+		.catch(next)
+})
+
+router.get('/courses/math', (req,res,next) => {
+	Course.find({courseSubject:'Math'})
+		.then((math)=> {
+			return math.map((math) => math.toObject())
+		})	
+		.then((math) => res.status(200).json( {math: math}))
+		.catch(next)
+})
+
+router.get('/courses/medicine', (req,res,next) => {
+	Course.find({courseSubject:'Medicine'})
+		.then((medicine)=> {
+			return medicine.map((medicine) => medicine.toObject())
+		})	
+		.then((medicine) => res.status(200).json( {medicine: medicine}))
+		.catch(next)
+})
+
+router.get('/courses/physics', (req,res,next) => {
+	Course.find({courseSubject:'Physics'})
+		.then((physics)=> {
+			return physics.map((physics) => physics.toObject())
+		})	
+		.then((physics) => res.status(200).json( {physics: physics}))
+		.catch(next)
+})
+
+router.get('/courses/socialscience', (req,res,next) => {
+	Course.find({courseSubject:'Social Science'})
+		.then((social)=> {
+			return social.map((social) => social.toObject())
+		})	
+		.then((social) => res.status(200).json( {social: social}))
+		.catch(next)
+})
+
 router.get('/courses/mine', requireToken, (req, res, next) => {
 	Course.find({owner: req.user.id})
 		.populate('owner')
