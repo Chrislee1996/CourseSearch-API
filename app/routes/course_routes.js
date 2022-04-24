@@ -36,6 +36,24 @@ router.get('/courses', (req, res, next) => {
 		.catch(next)
 })
 
+router.get('/courses/college', (req,res,next) => {
+	Course.find({credits:true})
+		.then((credits)=> {
+			return credits.map((credits) => credits.toObject())
+		})	
+		.then((credits) => res.status(200).json( {credits: credits}))
+		.catch(next)
+})
+
+router.get('/courses/notcollege', (req,res,next) => {
+	Course.find({credits:false})
+		.then((nocredits)=> {
+			return nocredits.map((nocredits) => nocredits.toObject())
+		})	
+		.then((nocredits) => res.status(200).json( {nocredits: nocredits}))
+		.catch(next)
+})
+
 router.get('/courses/computerprogramming', (req,res,next) => {
 	Course.find({courseSubject:'Programming'})
 		.then((programming)=> {
