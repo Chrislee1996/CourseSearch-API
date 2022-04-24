@@ -15,6 +15,26 @@ const router = express.Router()
 
 /******************** ROUTES *******************/
 
+router.get('/tags', (req,res,next) => {
+    Tag.find()
+        .then((tags) => {
+            return tags.map((tags)=> tags.toObject())
+        })
+        .then((tags) => res.status(200).json({ tags: tags }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
+
+
+router.get('/tags/:id', (req,res,next) => {
+	Tag.findById(req.params.id)
+		.then(handle404)
+		.then((tag) => res.status(200).json({ tag: tag.toObject() }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
+
+
 
 router.post('/tag/:courseId', requireToken, removeBlanks, (req, res, next) => {
     const tag = req.body.tag
@@ -44,13 +64,3 @@ router.delete('/delete/:courseId/:tagId', requireToken, (req, res, next) => {
 
 
 module.exports = router
-
-
-
-    // const tagId = req.params.tagId
-    // const courseId = req.params.courseId
-
-    // Course.updateOne({_id: courseId}, {$pull: {tags:tagId}},
-    // function(err, course) {
-    //     console.log('course:', course)
-    // })

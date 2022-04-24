@@ -2,6 +2,7 @@ const mongoose= require('mongoose')
 const Course = require('./course')
 
 const db = require('../../config/db')
+const Tag = require('./tags')
 
 
 const startCourses= [
@@ -10,13 +11,52 @@ const startCourses= [
     {courseName: "Introduction to Programming", courseInstitute: "Drexel University", image: "https://www.usnews.com/dims4/USNEWS/ec7c0f0/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2Fcd%2Ff35e75d608aaf118054bf4c91d82af%2Fcollege-photo_12760.jpg",  courseLink: "https://www.online.drexel.edu/legacycode/drexelv3/templates/detailview.aspx?crn=33598", courseSubject: "Computing and informatics", teacher: "John Zlotek", location: "inPerson", datesOffered: "3/28/2022-6/11/22", daysOfCourse: "Monday Wednesday Friday", timeOfCourse: "3:00 PM - 4:00 PM",credits: 3},
 ]
 
+// const startTags = [
+//     { 
+//         subject: "Math"
+//     },
+//     {
+//         subject: "Programming"
+//     },
+//     {
+//         subject: "Chemistry"
+//     },
+//     { 
+//         subject: "Business"
+//     },
+//     {
+//         subject: "Finance & Accounting"
+//     },
+//     {
+//         subject: "Design"
+//     },
+//     { 
+//         subject: "Marketing"
+//     },
+//     {
+//         subject: "Health and Fitness"
+//     },
+//     {
+//         subject: "Music"
+//     },
+//     { 
+//         subject: "Math"
+//     },
+//     {
+//         subject: "Arts"
+//     },
+//     {
+//         subject: "Lanuguage"
+//     },
+// ]
+
 mongoose.connect(db, {
 	useNewUrlParser: true,
 })
     .then(() => {
-        Course.remove({})
+        Course.deleteMany({owner: null})
             .then(deletedCourse => {
-                console.log('deleted courses', deletedCourse)
+                console.log('deleted tags', deletedCourse)
                 // we'll use console logs to check if it's working or if there are errors
                 Course.create(startCourses)
                     .then(newCourse => {
