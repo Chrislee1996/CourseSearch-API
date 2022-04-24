@@ -30,7 +30,7 @@ const courseSchema = new mongoose.Schema(
         location: {
 			type: String,
 			required: true,
-            enum:['remote', 'inPerson']
+            enum:['Remote', 'In Person']
 		},
         datesOffered: {
 			type: String,
@@ -63,5 +63,6 @@ const courseSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 )
+
 
 module.exports = mongoose.model('Course', courseSchema)
