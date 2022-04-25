@@ -68,27 +68,34 @@ router.patch('/reviews/:courseId/:reviewId', requireToken, removeBlanks, (req, r
 
 // DESTROY
 // DELETE /favorites/<id>
-router.delete('/delete/review/:courseId/:reviewId', requireToken, (req, res, next) => {
-	const reviewId = req.params.reviewId
-    const courseId = req.params.courseId
-    Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}})
-	.then(() => res.sendStatus(204))
-    .catch(next)
+router.delete('/reviews/:courseId/:reviewId', requireToken, (req, res, next) => {
+        // saving both ids to variables for easy ref later
+        const reviewId = req.params.reviewId
+        const courseId = req.params.courseId
+        // find the product in the db
+        Course.findById(courseId)
+            // if product not found throw 404
+            .then(handle404)
+            .then(course => {
+                // get the specific subdocument by its id
+                const theReview = course.reviews.id(reviewId)
+                // requireOwnership(req, course)
+                // call remove on the review we got on the line above requireOwnership
+                theReview.remove()
+                // return the saved product
+                return course.save()
+            })
+            // send 204 no content
+            .then(() => res.sendStatus(204))
+            .catch(next)
+
   })
 
 
 module.exports = router
 
-
-    // Review.findById(req.params.id)
-    //   .then(handle404)
-    //   .then((review) => {
-    //     // throw an error if current user doesn't own `favorite`
-    //     // requireOwnership(req, comment)
-    //     // delete the example ONLY IF the above didn't throw
-    //     review.deleteOne()
-    //   })
-    //   // send back 204 and no content if the deletion succeeded
-    //   .then(() => res.sendStatus(204))
-    //   // if an error occurs, pass it to the handler
-    //   .catch(next)
+	// const reviewId = req.params.reviewId
+    // const courseId = req.params.courseId
+    // Course.updateOne({_id: courseId}, {$pull: {reviews:reviewId}})
+	// .then(() => res.sendStatus(204))
+    // .catch(next)
