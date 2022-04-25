@@ -2,7 +2,7 @@ const mongoose= require('mongoose')
 
 
 const tagsSchema = new mongoose.Schema({
-    subject: {
+    details: {
         type:String,
         required:true
     },
