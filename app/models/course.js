@@ -41,9 +41,11 @@ const courseSchema = new mongoose.Schema(
         daysOfCourse: {
 			type: String,
 		},
-        timeOfCourse: {
+        startTime: {
 			type: String,
-			required: true,
+		},
+		endTime: {
+			type: String,
 		},
         credits: {
 			type: Boolean,
@@ -76,5 +78,22 @@ courseSchema.virtual('offerCredits').get(function() {
 		return 'Does not offere college credit'
 	}
 })
+
+courseSchema.virtual('courseStartDate').get(function() {
+	if (this.startDate === "") {
+		return 'Self-taught'
+	} else {
+		return this.startDate
+	}
+})
+
+courseSchema.virtual('courseEndDate').get(function() {
+	if (this.startDate === "") {
+		return 'Self-taught'
+	} else {
+		return this.endDate
+	}
+})
+
 
 module.exports = mongoose.model('Course', courseSchema)
