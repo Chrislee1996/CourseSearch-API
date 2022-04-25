@@ -33,25 +33,6 @@ router.post('/comments/:reviewId', (req, res, next) => {
         .catch(next)
 })
 
-
-router.patch('/comments/:reviewId/:commentId', requireToken, removeBlanks, (req, res, next) => {
-    const commentId = req.params.commentId
-    const reviewId = req.params.reviewId
-
-    Review.findById(reviewId)
-        .then(handle404)
-        .then(review => {
-            const theComment = review.comments.id(commentId)
-            // requireOwnership(req, review)
-            theComment.set(req.body.comment)
-
-            return review.save()
-        })
-        .then(() => res.sendStatus(204))
-        .catch(next)
-
-})
-
 router.delete('/comments/:reviewId/:commentId', requireToken,(req, res, next) => {
     const commentId = req.params.commentId
     const reviewId = req.params.reviewId

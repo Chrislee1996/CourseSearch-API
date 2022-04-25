@@ -26,7 +26,7 @@ router.get('/reviews/:id', (req, res, next) => {
 		.catch(next)
 })
 
-router.post('/:courseId', requireToken, removeBlanks, (req, res, next) => {
+router.post('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
     const review = req.body.review
     const courseId = req.params.courseId
     Course.findById(courseId)
