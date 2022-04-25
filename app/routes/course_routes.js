@@ -250,17 +250,13 @@ router.get('/courses/:id', (req, res, next) => {
 
 // // CREATE
 // // POST /courses
-router.post('/courses', requireToken, async (req, res, next) => {
+router.post('/courses', requireToken,  (req, res, next) => {
 	req.body.course.owner = req.user.id
 	Course.create(req.body.course)
 		.then((course) => {
 			res.status(201).json({ course: course.toObject() })
 		})
 		.catch(next)
-	// const { course } = req.body
-	// const newCourse = await Course.create(course)
-	// await Course.updateMany({ '_id': newCourse.tags}, {$push :{ courses: newCourse._id}})
-	// return res.send(newCourse)
 })
 
 
