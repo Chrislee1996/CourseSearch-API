@@ -82,21 +82,6 @@ courseSchema.virtual('offerCredits').get(function() {
 	}
 })
 
-courseSchema.virtual('courseStartDate').get(function() {
-	if (this.startDate === "") {
-		return 'Self-taught'
-	} else {
-		return this.startDate
-	}
-})
-
-courseSchema.virtual('courseEndDate').get(function() {
-	if (this.startDate === "") {
-		return 'Self-taught'
-	} else {
-		return this.endDate
-	}
-})
 
 
 module.exports = mongoose.model('Course', courseSchema)
