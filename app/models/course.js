@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
+const reviewSchema = require('./review')
+
 
 const {Schema, model} = mongoose
+
 
 const courseSchema = new mongoose.Schema(
 	{
@@ -58,10 +61,7 @@ const courseSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Tags'
         }],
-		reviews: [ {
-			type: mongoose.Schema.Types.ObjectId,
-            ref: 'Reviews'
-		}],
+		reviews: [reviewSchema],
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',

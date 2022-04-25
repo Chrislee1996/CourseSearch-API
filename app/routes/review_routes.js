@@ -16,29 +16,20 @@ const router = express.Router()
 /******************** ROUTES *******************/
 
 
-router.get('/reviews/:id', (req, res, next) => {
-	// req.params.id will be set based on the `:id` in the route
-	Review.findById(req.params.id)
-    .populate('owner')
-		.then(handle404)
-		.then((review) => res.status(200).json({ review: review.toObject() }))
-		// if an error occurs, pass it to the handler
-		.catch(next)
-})
 
-router.post('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
+router.post('/reviews/:courseId', (req, res, next) => {
     const review = req.body.review
     const courseId = req.params.courseId
     Course.findById(courseId)
-        .then(course => {
-            Review.create(review)
-                .then((review) => {
-                    course.reviews.push(review)
-                    course.save()
-                    res.status(201).json({ review: review.toObject() })
-                })
+        .then(handle404)
+            .then((course) => {
+                course.reviews.push(review)
+                return course.save()
+            })
+            .then(course => res.status(201).json({ course: course }))
+            // catch errors and send to the handler
+            .catch(next)
         })
-})
 
 router.patch('/reviews/:id', requireToken, removeBlanks, (req, res, next) => {
 	delete req.body.review.owner

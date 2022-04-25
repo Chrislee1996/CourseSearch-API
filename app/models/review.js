@@ -5,7 +5,6 @@ const commentSchema = require('./comment')
 const reviewSchema = new mongoose.Schema({
     note: {
         type:String,
-        required:true
     },
     courseRating: {
         type: Number,
@@ -28,4 +27,4 @@ const reviewSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Review', reviewSchema)
+module.exports = reviewSchema
