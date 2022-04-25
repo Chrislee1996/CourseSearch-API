@@ -72,24 +72,6 @@ router.get('/courses/art', (req,res,next) => {
 		.catch(next)
 })
 
-router.get('/courses/biology', (req,res,next) => {
-	Course.find({courseSubject:'Biology'})
-		.then((biology)=> {
-			return biology.map((biology) => biology.toObject())
-		})	
-		.then((biology) => res.status(200).json( {biology: biology}))
-		.catch(next)
-})
-
-router.get('/courses/chemistry', (req,res,next) => {
-	Course.find({courseSubject:'Chemistry'})
-		.then((chemistry)=> {
-			return chemistry.map((chemistry) => chemistry.toObject())
-		})	
-		.then((chemistry) => res.status(200).json( {chemistry: chemistry}))
-		.catch(next)
-})
-
 router.get('/courses/business', (req,res,next) => {
 	Course.find({courseSubject:'Business'})
 		.then((business)=> {
@@ -198,12 +180,12 @@ router.get('/courses/medicine', (req,res,next) => {
 		.catch(next)
 })
 
-router.get('/courses/physics', (req,res,next) => {
-	Course.find({courseSubject:'Physics'})
-		.then((physics)=> {
-			return physics.map((physics) => physics.toObject())
+router.get('/courses/science', (req,res,next) => {
+	Course.find({courseSubject:'Science'})
+		.then((science)=> {
+			return science.map((science) => science.toObject())
 		})	
-		.then((physics) => res.status(200).json( {physics: physics}))
+		.then((science) => res.status(200).json( {science: science}))
 		.catch(next)
 })
 
