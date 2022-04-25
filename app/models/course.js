@@ -32,12 +32,14 @@ const courseSchema = new mongoose.Schema(
 			required: true,
             enum:['Remote', 'In Person']
 		},
-        datesOffered: {
-			type: String,
+        startDate: {
+			type: Date,
+		},
+		endDate: {
+			type: Date,
 		},
         daysOfCourse: {
 			type: String,
-			required: true,
 		},
         timeOfCourse: {
 			type: String,
