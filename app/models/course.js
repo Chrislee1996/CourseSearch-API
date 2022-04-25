@@ -78,7 +78,7 @@ courseSchema.virtual('offerCredits').get(function() {
 	if (this.credits === true) {
 		return 'College credits offered'
 	} else if (this.credits === false) {
-		return 'Does not offere college credit'
+		return 'Does not offer college credit'
 	}
 })
 

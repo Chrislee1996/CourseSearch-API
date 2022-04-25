@@ -171,15 +171,6 @@ router.get('/courses/math', (req,res,next) => {
 		.catch(next)
 })
 
-router.get('/courses/medicine', (req,res,next) => {
-	Course.find({courseSubject:'Medicine'})
-		.then((medicine)=> {
-			return medicine.map((medicine) => medicine.toObject())
-		})	
-		.then((medicine) => res.status(200).json( {medicine: medicine}))
-		.catch(next)
-})
-
 router.get('/courses/science', (req,res,next) => {
 	Course.find({courseSubject:'Science'})
 		.then((science)=> {
