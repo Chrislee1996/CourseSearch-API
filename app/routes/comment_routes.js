@@ -33,11 +33,10 @@ router.post('/comments/:courseId/:reviewId', (req, res, next) => {
     Course.findById(courseId)
         .then(handle404)
             .then((course) => {
-
                 reviews = course.reviews
-                console.log(reviews.comments,'here is our course reviews comments')
-                // course.reviews.comments.push(comment)
-                // return course.save()
+                console.log(reviews[0].comments,'here is our course reviews comments')
+                reviews[0].comments.push(comment)
+                return course.save()
             })
             .then(course => res.status(201).json({ course: course }))
             // catch errors and send to the handler
