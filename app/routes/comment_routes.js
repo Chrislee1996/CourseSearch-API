@@ -27,7 +27,6 @@ const router = express.Router()
 //         })
 
 router.post('/comments/:courseId/:reviewId', (req, res, next) => {
-    const review = req.body.review
     const comment = req.body.comment
     const courseId = req.params.courseId
     Course.findById(courseId)
@@ -44,15 +43,14 @@ router.post('/comments/:courseId/:reviewId', (req, res, next) => {
         })
 
 
-router.delete('/comments/:reviewId/:commentId', requireToken,(req, res, next) => {
+router.delete('/comments/:courseId/:reviewId/:commentId', requireToken,(req, res, next) => {
     const commentId = req.params.commentId
-    const reviewId = req.params.reviewId
+    const courseId = req.params.courseId
     // find the product in the db
-    Review.findById(reviewId)
-
+    Course.findById(courseId)
         // if product not found throw 404
         .then(handle404)
-        .then(review => {
+        .then(course => {
             const theComment = review.comments.id(commentId)
             // requireOwnership(req, review)
             // call remove on the review we got on the line above requireOwnership
