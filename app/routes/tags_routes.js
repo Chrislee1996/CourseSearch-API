@@ -26,18 +26,10 @@ router.get('/tags', (req,res,next) => {
 })
 
 
-// router.get('/tags/:id', (req,res,next) => {
-// 	Tag.findById(req.params.id)
-// 		.then(handle404)
-// 		.then((tag) => res.status(200).json({ tag: tag.toObject() }))
-// 		// if an error occurs, pass it to the handler
-// 		.catch(next)
-// })
-
 router.get('/tags/onlinecourses',async (req,res,next) =>{
     const tag = await Tag.find({details:'Online Courses'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0].details})
+    console.log(tag, 'here is our course')
+    res.status(200).json({course:tag})
 
 })
 
