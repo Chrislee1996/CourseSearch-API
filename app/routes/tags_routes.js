@@ -28,8 +28,8 @@ router.get('/tags', (req,res,next) => {
 
 router.get('/tags/onlinecourses',async (req,res,next) =>{
     const tag = await Tag.find({details:'Online Courses'}).populate('course')
-    console.log(tag, 'here is our course')
-    res.status(200).json({course:tag})
+    console.log(tag[0].id, 'here is our course')
+    res.status(200).json({course:tag[0].id})
 
 })
 
