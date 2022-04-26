@@ -12,33 +12,37 @@ const router = express.Router()
 
 
 /******************** ROUTES *******************/
-router.post('/comments/:reviewId', (req, res, next) => {
-    const comment = req.body.comment
-    const reviewId = req.params.reviewId
-    Review.findById(reviewId)
-        .then(handle404)
-            .then((review) => {
-                review.comments.push(comment)
-                return review.save()
-            })
-            .then(review => res.status(201).json({ review: review }))
-            // catch errors and send to the handler
-            .catch(next)
-        })
-
 // router.post('/comments/:reviewId', (req, res, next) => {
-//     const review = req.body.review
-//     const courseId = req.params.courseId
-//     Course.findById(courseId)
+//     const comment = req.body.comment
+//     const reviewId = req.params.reviewId
+//     Review.findById(reviewId)
 //         .then(handle404)
-//             .then((course) => {
-//                 course.reviews.push(review)
-//                 return course.save()
+//             .then((review) => {
+//                 review.comments.push(comment)
+//                 return review.save()
 //             })
-//             .then(course => res.status(201).json({ course: course }))
+//             .then(review => res.status(201).json({ review: review }))
 //             // catch errors and send to the handler
 //             .catch(next)
 //         })
+
+router.post('/comments/:courseId/:reviewId', (req, res, next) => {
+    const review = req.body.review
+    const comment = req.body.comment
+    const courseId = req.params.courseId
+    Course.findById(courseId)
+        .then(handle404)
+            .then((course) => {
+
+                reviews = course.reviews
+                console.log(reviews.comments,'here is our course reviews comments')
+                // course.reviews.comments.push(comment)
+                // return course.save()
+            })
+            .then(course => res.status(201).json({ course: course }))
+            // catch errors and send to the handler
+            .catch(next)
+        })
 
 
 router.delete('/comments/:reviewId/:commentId', requireToken,(req, res, next) => {

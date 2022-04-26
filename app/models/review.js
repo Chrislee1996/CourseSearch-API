@@ -1,5 +1,6 @@
 const mongoose= require('mongoose')
 const commentSchema = require('./comment')
+const { Schema, model} = mongoose
 
 
 const reviewSchema = new mongoose.Schema({
@@ -19,7 +20,7 @@ const reviewSchema = new mongoose.Schema({
         default:5
     },
     owner: {
-        type: mongoose.Schema.Types.ObjectID,
+        type: Schema.Types.ObjectID,
         ref: 'User', 
     },
     comments: [commentSchema]

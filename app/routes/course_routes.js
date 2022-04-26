@@ -28,6 +28,7 @@ const router = express.Router()
 // GET /courses
 router.get('/courses', (req, res, next) => {
 	Course.find()
+	.populate('owner')
 		.then((courses) => {
 			return courses.map((course) => course.toObject())
 		})
@@ -214,6 +215,7 @@ router.get('/courses/:id', (req, res, next) => {
 router.get('/courses/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Course.findById(req.params.id)
+		.populate('owner')
 		.then(handle404)
 		.then((course) => res.status(200).json({ course: course.toObject() }))
 		// if an error occurs, pass it to the handler
