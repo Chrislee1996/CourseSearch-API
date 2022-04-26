@@ -59,7 +59,7 @@ const courseSchema = new mongoose.Schema(
 		},
         tags: [ {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tags'
+            ref: 'Tag'
         }],
 		reviews: [reviewSchema],
 		owner: {
