@@ -12,29 +12,16 @@ const router = express.Router()
 
 
 /******************** ROUTES *******************/
-// router.post('/comments/:reviewId', (req, res, next) => {
-//     const comment = req.body.comment
-//     const reviewId = req.params.reviewId
-//     Review.findById(reviewId)
-//         .then(handle404)
-//             .then((review) => {
-//                 review.comments.push(comment)
-//                 return review.save()
-//             })
-//             .then(review => res.status(201).json({ review: review }))
-//             // catch errors and send to the handler
-//             .catch(next)
-//         })
-
 router.post('/comments/:courseId/:reviewId', (req, res, next) => {
     const comment = req.body.comment
     const courseId = req.params.courseId
+    const reviewId = req.params.reviewId
     Course.findById(courseId)
         .then(handle404)
             .then((course) => {
+                // console.log(course.reviews.id(reviewId).comments,'course reviews')
                 reviews = course.reviews
-                console.log(reviews[0].comments,'here is our course reviews comments')
-                reviews[0].comments.push(comment)
+                course.reviews.id(reviewId).comments.push(comment)
                 return course.save()
             })
             .then(course => res.status(201).json({ course: course }))
@@ -44,22 +31,24 @@ router.post('/comments/:courseId/:reviewId', (req, res, next) => {
 
 
 router.delete('/comments/:courseId/:reviewId/:commentId', requireToken,(req, res, next) => {
-    const commentId = req.params.commentId
     const courseId = req.params.courseId
-    // find the product in the db
+    const commentId = req.params.commentId
+    const reviewId = req.params.reviewId
     Course.findById(courseId)
         // if product not found throw 404
         .then(handle404)
         .then(course => {
-            const theComment = review.comments.id(commentId)
+            const theReview = course.reviews.id(reviewId)
+            console.log(theReview)
+            const theComment = theReview.comments.id(commentId)
+            console.log(theComment,'here is theComment on line 42')
             // requireOwnership(req, review)
-            // call remove on the review we got on the line above requireOwnership
             theComment.remove()
             // return the saved product
-            return review.save()
+            return course.save()
         })
         // send 204 no content
-        .then(() => res.sendStatus(204))
+        .then(() => res.sendStatus(204))    
         .catch(next)
 })
 
