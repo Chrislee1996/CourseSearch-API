@@ -33,19 +33,6 @@ router.get('/tags/onlinecourses',async (req,res,next) =>{
 
 })
 
-router.get('/tags/collegecourses',async (req,res,next) =>{
-    const tag = await Tag.find({details:'College Courses'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/noncollegecourses',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Non-College Courses'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
 
 router.get('/tags/inpersoncourses',async (req,res,next) =>{
     const tag = await Tag.find({details:'In person Courses'}).populate('course')

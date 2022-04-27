@@ -39,6 +39,7 @@ router.delete('/comments/:courseId/:reviewId/:commentId', requireToken,(req, res
         // if product not found throw 404
         .then(handle404)
         .then(course => {
+            console.log(courseId, 'here is my courseId')
             const theReview = course.reviews.id(reviewId)
             console.log(theReview)
             const theComment = theReview.comments.id(commentId)
@@ -52,6 +53,29 @@ router.delete('/comments/:courseId/:reviewId/:commentId', requireToken,(req, res
         .then(() => res.sendStatus(204))    
         .catch(next)
 })
+
+// router.delete('/comments/:reviewId/:commentId', requireToken,(req, res, next) => {
+//     const courseId = req.params.courseId
+//     const reviewId = req.params.reviewId
+//     const commentId = req.params.commentId
+//     Course.findById(courseId)
+//         // if product not found throw 404
+//         .then(handle404)
+//         .then(course => {
+//             console.log(courseId, 'here is my courseId')
+//             const theReview = course.reviews.id(reviewId)
+//             console.log(theReview)
+//             const theComment = theReview.comments.id(commentId)
+//             console.log(theComment,'here is theComment on line 42')
+//             // requireOwnership(req, review)
+//             theComment.remove()
+//             // return the saved product
+//             return course.save()
+//         })
+//         // send 204 no content
+//         .then(() => res.sendStatus(204))    
+//         .catch(next)
+// })
 
 
 module.exports = router
