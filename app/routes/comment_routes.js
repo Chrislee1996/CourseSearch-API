@@ -16,6 +16,7 @@ router.post('/comments/:courseId/:reviewId', (req, res, next) => {
     const comment = req.body.comment
     const courseId = req.params.courseId
     const reviewId = req.params.reviewId
+    // const commentId = req.params.commentId
     Course.findById(courseId)
         .then(handle404)
             .then((course) => {
