@@ -33,8 +33,8 @@ router.post('/comments/:courseId/:reviewId', (req, res, next) => {
 
 router.delete('/comments/:courseId/:reviewId/:commentId', requireToken,(req, res, next) => {
     const courseId = req.params.courseId
-    const commentId = req.params.commentId
     const reviewId = req.params.reviewId
+    const commentId = req.params.commentId
     Course.findById(courseId)
         // if product not found throw 404
         .then(handle404)
