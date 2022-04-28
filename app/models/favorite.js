@@ -4,6 +4,7 @@ const favoriteSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User', 
+        required:true
     },
     course: {
         type: mongoose.Schema.Types.ObjectID,

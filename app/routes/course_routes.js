@@ -289,7 +289,6 @@ router.get('/favorites', (req,res,next) => {
 
 router.post('/favorites', requireToken, (req,res,next)=> {
 	req.body.favorite.owner = req.user.id
-
 	Favorite.create(req.body.favorite)
 	.then((favorite)=> {
 		res.status(201).json({favorite:favorite.toObject()})
