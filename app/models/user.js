@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		// attending:[{
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: 'Course'
+		// }],
 		token: String,
 	},
 	{

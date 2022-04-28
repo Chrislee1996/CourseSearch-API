@@ -5,6 +5,7 @@ const passport = require('passport')
 
 const Course = require('../models/course')
 const Tag = require('../models/tags')
+const Favorite = require('../models/favorite')
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
 const customErrors = require('../../lib/custom_errors')
@@ -257,6 +258,8 @@ router.patch('/courses/:id', requireToken, removeBlanks, (req, res, next) => {
 		.catch(next)
 })
 
+
+
 // DESTROY
 router.delete('/courses/:id', requireToken, (req, res, next) => {
 	Course.findById(req.params.id)
@@ -269,6 +272,29 @@ router.delete('/courses/:id', requireToken, (req, res, next) => {
 		.then(() => res.sendStatus(204))
 		// if an error occurs, pass it to the handler
 		.catch(next)
+})
+
+
+// User courses added to their favorites
+router.get('/favorites', (req,res,next) => {
+	Favorite.find({})
+	.populate('course')
+	.populate('owner')
+	.then((favorites)=> {
+		return favorites.map((favorite)=> favorite.toObject())
+	})
+	.then((favorites)=> res.status(200).json({favorites:favorites}))
+	.catch(next)
+})
+
+router.post('/favorites', requireToken, (req,res,next)=> {
+	req.body.favorite.owner = req.user.id
+
+	Favorite.create(req.body.favorite)
+	.then((favorite)=> {
+		res.status(201).json({favorite:favorite.toObject()})
+	})
+	.catch(next)
 })
 
 module.exports = router
