@@ -5,7 +5,7 @@ const passport = require('passport')
 
 const Course = require('../models/course')
 const Tag = require('../models/tags')
-const Favorite = require('../models/favorite')
+const AttendingCourse = require('../models/attendingCourse')
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
 const customErrors = require('../../lib/custom_errors')
@@ -275,33 +275,33 @@ router.delete('/courses/:id', requireToken, (req, res, next) => {
 })
 
 
-// User courses added to their favorites
-router.get('/favorites', (req,res,next) => {
-	Favorite.find({})
+// User courses added to their profile
+router.get('/attendingcourses', (req,res,next) => {
+	AttendingCourse.find({})
 	.populate('course')
 	.populate('owner')
-	.then((favorites)=> {
-		return favorites.map((favorite)=> favorite.toObject())
+	.then((attendingcourses)=> {
+		return attendingcourses.map((attendingcourse)=> attendingcourse.toObject())
 	})
-	.then((favorites)=> res.status(200).json({favorites:favorites}))
+	.then((attendingcourses)=> res.status(200).json({attendingcourses:attendingcourses}))
 	.catch(next)
 })
 
-router.post('/favorites', requireToken, (req,res,next)=> {
-	req.body.favorite.owner = req.user.id
-	Favorite.create(req.body.favorite)
-	.then((favorite)=> {
-		res.status(201).json({favorite:favorite.toObject()})
+router.post('/attendingcourses', requireToken, (req,res,next)=> {
+	req.body.attendingcourse.owner = req.user.id
+	AttendingCourse.create(req.body.attendingcourse)
+	.then((attendingcourse)=> {
+		res.status(201).json({attendingcourse:attendingcourse.toObject()})
 	})
 	.catch(next)
 })
 
-router.delete('/favorites/:id', requireToken, (req,res,next)=> {
-	Favorite.findById(req.params.id)
+router.delete('/attendingcourses/:id', requireToken, (req,res,next)=> {
+	AttendingCourse.findById(req.params.id)
 		.then(handle404)
-		.then((favorite)=> {
-			requireOwnership(req,favorite)
-			favorite.deleteOne()
+		.then((attendingcourse)=> {
+			requireOwnership(req,attendingcourse)
+			attendingcourse.deleteOne()
 		})
 		.then(() => res.sendStatus(204))
 		.catch(next)

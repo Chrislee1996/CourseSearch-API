@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const favoriteSchema = new mongoose.Schema({
+const attendingCourseSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User', 
@@ -15,4 +15,4 @@ const favoriteSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Favorite', favoriteSchema)
+module.exports = mongoose.model('AttendingCourse', attendingCourseSchema)
