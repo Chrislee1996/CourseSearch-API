@@ -26,90 +26,12 @@ router.get('/tags', (req,res,next) => {
 })
 
 
-router.get('/tags/onlinecourses',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Online Courses'}).populate('course')
-    console.log(tag[0].id, 'here is our course')
-    res.status(200).json({course:tag[0].id})
-
-})
-
-
-router.get('/tags/inpersoncourses',async (req,res,next) =>{
-    const tag = await Tag.find({details:'In person Courses'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/mandatoryattendence',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Mandatory Attendence'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/homework',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Lots of homework'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/testheavy',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Test Heavy'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-
-router.get('/tags/groupprojects',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Group Projects'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/feedback',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Good Feedback'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/material',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Cares About the Material'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/caring',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Caring'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/textbook',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Text-book Mandatory'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/toughgrader',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Tough Grader'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
-})
-
-router.get('/tags/lectureheavy',async (req,res,next) =>{
-    const tag = await Tag.find({details:'Lecture Heavy'}).populate('course')
-    console.log(tag[0], 'here is our course')
-    res.status(200).json({course:tag[0]})
-
+router.get('/tags/:tagId', (req,res,next)=> {
+    Course.find({tags: req.params.tagId})
+        .populate('tags')
+        .then(handle404)
+        .then((courses)=> res.status(200).json({ courses: courses }))
+        .catch(next)
 })
 
 
