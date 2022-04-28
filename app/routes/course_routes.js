@@ -296,4 +296,15 @@ router.post('/favorites', requireToken, (req,res,next)=> {
 	.catch(next)
 })
 
+router.delete('/favorites/:id', requireToken, (req,res,next)=> {
+	Favorite.findById(req.params.id)
+		.then(handle404)
+		.then((favorite)=> {
+			requireOwnership(req,favorite)
+			favorite.deleteOne()
+		})
+		.then(() => res.sendStatus(204))
+		.catch(next)
+})
+
 module.exports = router
