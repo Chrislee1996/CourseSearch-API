@@ -267,16 +267,17 @@ router.delete('/courses/:id', requireToken, (req, res, next) => {
 
 
 // User courses added to their profile
-router.get('/attendingcourses', (req,res,next) => {
-	AttendingCourse.find({})
-	.populate('course')
-	.populate('owner')
+router.get('/attendingcourses', requireToken, (req,res,next) => {
+	console.log(req.user._id,'courseOwner here')
+	courseOwner = req.user._id
+	AttendingCourse.find({owner:req.user._id})
 	.then((attendingcourses)=> {
 		return attendingcourses.map((attendingcourse)=> attendingcourse.toObject())
 	})
 	.then((attendingcourses)=> res.status(200).json({attendingcourses:attendingcourses}))
 	.catch(next)
 })
+
 
 router.post('/attendingcourses', requireToken, (req,res,next)=> {
 	req.body.attendingcourse.owner = req.user.id
