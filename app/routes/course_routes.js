@@ -268,9 +268,10 @@ router.delete('/courses/:id', requireToken, (req, res, next) => {
 
 // User courses added to their profile
 router.get('/attendingcourses', requireToken, (req,res,next) => {
-	console.log(req.user._id,'courseOwner here')
-	courseOwner = req.user._id
-	AttendingCourse.find({owner:req.user._id})
+
+	AttendingCourse.find({owner: req.user.id})
+	.populate('course')
+	.populate('owner')
 	.then((attendingcourses)=> {
 		return attendingcourses.map((attendingcourse)=> attendingcourse.toObject())
 	})
@@ -278,6 +279,14 @@ router.get('/attendingcourses', requireToken, (req,res,next) => {
 	.catch(next)
 })
 
+// Course.find({owner: req.user.id})
+// .populate('owner')
+// .then((courses) => {
+// 	return courses.map((course) => course.toObject())
+// })
+// .then((courses) => res.status(200).json({ courses: courses }))
+// // if an error occurs, pass it to the handler
+// .catch(next)
 
 router.post('/attendingcourses', requireToken, (req,res,next)=> {
 	req.body.attendingcourse.owner = req.user.id
