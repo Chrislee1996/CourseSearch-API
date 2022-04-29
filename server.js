@@ -10,6 +10,7 @@ const commentRoutes = require('./app/routes/comment_routes')
 const reviewRoutes = require('./app/routes/review_routes')
 const tagRoutes = require('./app/routes/tags_routes')
 
+const likeRoutes = require('./app/routes/like_routes')
 
 // require middleware
 const errorHandler = require('./lib/error_handler')
@@ -75,6 +76,7 @@ app.use(commentRoutes)
 app.use(reviewRoutes)
 app.use(tagRoutes)
 
+app.use(likeRoutes)
 
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be
