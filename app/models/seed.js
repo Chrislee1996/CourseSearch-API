@@ -35,12 +35,6 @@ const startTags = [
     { 
         details: "Online Courses"
     },
-    {
-        details: "College Courses"
-    },
-    {
-        details: "Non-College Courses"
-    },
     { 
         details: "In person Courses"
     },
@@ -70,6 +64,12 @@ const startTags = [
     },
     {
     details: "Tough Grader"
+    },
+    {
+    details: "Offers Extra Credit"
+    },
+    {
+    details: "Lots of Reading"
     },
     {
     details: "Lecture Heavy"

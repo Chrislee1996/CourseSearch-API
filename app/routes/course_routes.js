@@ -39,23 +39,25 @@ router.get('/courses', (req, res, next) => {
 		.catch(next)
 })
 
-// router.get('/courses/collegecourses', (req,res,next) => {
-// 	Course.find({credits:true})
-// 		.then((college)=> {
-// 			return college.map((college) => college.toObject())
-// 		})	
-// 		.then((college) => res.status(200).json( {college: college}))
-// 		.catch(next)
-// })
+router.get('/courses/collegecourses', (req,res,next) => {
+	Course.find({credits:true})
+	.populate('tags')
+		.then((college)=> {
+			return college.map((college) => college.toObject())
+		})	
+		.then((college) => res.status(200).json( {college: college}))
+		.catch(next)
+})
 
-// router.get('/courses/noncollegecourses', (req,res,next) => {
-// 	Course.find({credits:false})
-// 		.then((notcollege)=> {
-// 			return notcollege.map((notcollege) => notcollege.toObject())
-// 		})	
-// 		.then((notcollege) => res.status(200).json( {notcollege: notcollege}))
-// 		.catch(next)
-// })
+router.get('/courses/noncollegecourses', (req,res,next) => {
+	Course.find({credits:false})
+	.populate('tags')
+		.then((notcollege)=> {
+			return notcollege.map((notcollege) => notcollege.toObject())
+		})	
+		.then((notcollege) => res.status(200).json( {notcollege: notcollege}))
+		.catch(next)
+})
 
 router.get('/courses/computerprogramming', (req,res,next) => {
 	Course.find({courseSubject:'Programming'})
@@ -279,14 +281,6 @@ router.get('/attendingcourses', requireToken, (req,res,next) => {
 	.catch(next)
 })
 
-// Course.find({owner: req.user.id})
-// .populate('owner')
-// .then((courses) => {
-// 	return courses.map((course) => course.toObject())
-// })
-// .then((courses) => res.status(200).json({ courses: courses }))
-// // if an error occurs, pass it to the handler
-// .catch(next)
 
 router.post('/attendingcourses', requireToken, (req,res,next)=> {
 	req.body.attendingcourse.owner = req.user.id
