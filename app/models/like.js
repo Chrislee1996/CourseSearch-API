@@ -10,7 +10,6 @@ const likeSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User', 
-        required:true
     },
 },{
     timestamps: true

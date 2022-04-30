@@ -11,6 +11,10 @@ const attendingCourseSchema = new mongoose.Schema({
         ref: 'Course', 
         required:true,
     },
+    tags: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tag'
+    }],
 },{
     timestamps: true
 })

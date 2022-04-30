@@ -16,9 +16,10 @@ const router = express.Router()
 
 
 
-router.post('/like/:courseId', requireToken, removeBlanks, (req, res, next) => {
+router.post('/like/:courseId', (req, res, next) => {
+    const like = req.body.like
     const courseId = req.params.courseId
-	req.body.like.owner = req.user.id
+	// req.body.like.owner = req.user._id
     Course.findById(courseId)
         .then(handle404)
             .then((course) => {
@@ -26,13 +27,11 @@ router.post('/like/:courseId', requireToken, removeBlanks, (req, res, next) => {
                 return course.save()
             })
 		// if that succeeded, return 204 and no JSON
-		.then(() => res.sendStatus(204))
+		// .then(() => res.sendStatus(204))
+        .then(course => res.status(201).json({ course: course }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
-
-
-
 
 
 

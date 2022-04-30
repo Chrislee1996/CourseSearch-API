@@ -197,6 +197,7 @@ router.get('/courses/socialscience', (req,res,next) => {
 router.get('/courses/mine', requireToken, (req, res, next) => {
 	Course.find({owner: req.user.id})
 		.populate('owner')
+		.populate('tags')
 		.then((courses) => {
 			return courses.map((course) => course.toObject())
 		})
@@ -270,10 +271,10 @@ router.delete('/courses/:id', requireToken, (req, res, next) => {
 
 // User courses added to their profile
 router.get('/attendingcourses', requireToken, (req,res,next) => {
-
 	AttendingCourse.find({owner: req.user.id})
 	.populate('course')
 	.populate('owner')
+	.populate('tags')
 	.then((attendingcourses)=> {
 		return attendingcourses.map((attendingcourse)=> attendingcourse.toObject())
 	})
@@ -285,6 +286,7 @@ router.get('/attendingcourses', requireToken, (req,res,next) => {
 router.post('/attendingcourses', requireToken, (req,res,next)=> {
 	req.body.attendingcourse.owner = req.user.id
 	AttendingCourse.create(req.body.attendingcourse)
+	.populate('tags')
 	.then((attendingcourse)=> {
 		res.status(201).json({attendingcourse:attendingcourse.toObject()})
 	})
