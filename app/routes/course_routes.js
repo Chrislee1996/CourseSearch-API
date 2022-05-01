@@ -233,6 +233,8 @@ router.post('/courses', requireToken,  (req, res, next) => {
 })
 
 
+
+
 router.patch('/courses/:id', requireToken, removeBlanks, (req, res, next) => {
 	delete req.body.course.owner
 
