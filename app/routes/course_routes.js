@@ -197,7 +197,6 @@ router.get('/courses/socialscience', (req,res,next) => {
 router.get('/courses/mine', requireToken, (req, res, next) => {
 	Course.find({owner: req.user.id})
 		.populate('owner')
-		.populate('tags')
 		.then((courses) => {
 			return courses.map((course) => course.toObject())
 		})
