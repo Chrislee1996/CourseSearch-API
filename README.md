@@ -21,6 +21,7 @@
 | `/sign-up`        | POST | Saves users signup info| No         |
 | `/sign-in`        | POST | Sign-in users session | No |
 | `/change-password` | PATCH | Updates users password | Yes |
+| `/sign-out` | DELETE | Signs out user | Yes |
 | `/course`        | GET | Retrieve Course index page | No|
 | `/course/:id`        | GET | Retrieve a specific course | No|
 | `/course/mine`        | GET | Retrieve user's created courses | Yes|
