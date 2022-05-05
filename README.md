@@ -18,28 +18,28 @@
 
 | Endpoint          | Action | Description |`AuthenticatedRoute`? | 
 |------------------|-------|------|----|
-| `/sign-up`        | Create | Saves users signup info| No         |
-| `/sign-in`        | Create | Sign-in users session | No |
-| `/change-password` | Update | Updates users password | Yes |
-| `/course`        | Read | Retrieve Course index page | No|
-| `/course/:id`        | Read | Retrieve a specific course | No|
-| `/course/mine`        | Read | Retrieve user's created courses | Yes|
-| `/course/collegecourses`        | Read | Retrieve college related courses | No|
-| `/course/noncollegecourses`        | Read | Retrieve non-college related courses | No|
-| `/course/subject`        | Read | Retrieve specific subject of college courses | No|
-| `/course`        | Create | Creates a new course | Yes|
-| `/course/:id`        | Update | Updates a specific course | Yes|
-| `/course/:id`        | Delete | Deletes a specific course | Yes|
-| `/attendingcourses`        | Read | Retreives a specific courses that a user adds to their profile | Yes|
-| `/attendingcourses`        | Create | Adds a specific courses that a user adds to their profile | Yes|
-| `/attendingcourses/:id`        | Create | Deletes a specific courses that a user adds to their profile | Yes|
-| `/review/:courseId`        | Post |   Creates a review on a specific course| Yes|
-| `/review/:courseId/:reviewId`        | Update |   Updates a  specific review on a specific course| Yes|
-| `/review/:courseId/:reviewId`        | Delete |   Deletes a  specific review on a specific course| Yes|
-| `/tags`        | Read |   Retrieves index of tags related to a specific course | No|
-| `/tags/:id`        | Read |   Retrieves a specific tag related to a specific course | No|
-| `/comments/:courseId/:reviewId`        | Create |   Creates a comment to a specific review that was left on a course | Yes|
-| `/comments/:courseId/:reviewId/:commentId`        | Delete |   Deletes a specific comment to a specific review that was left on a course | Yes|
+| `/sign-up`        | POST | Saves users signup info| No         |
+| `/sign-in`        | POST | Sign-in users session | No |
+| `/change-password` | PATCH | Updates users password | Yes |
+| `/course`        | GET | Retrieve Course index page | No|
+| `/course/:id`        | GET | Retrieve a specific course | No|
+| `/course/mine`        | GET | Retrieve user's created courses | Yes|
+| `/course/collegecourses`        | GET | Retrieve college related courses | No|
+| `/course/noncollegecourses`        | GET | Retrieve non-college related courses | No|
+| `/course/subject`        | GET | Retrieve specific subject of college courses | No|
+| `/course`        | POST | Creates a new course | Yes|
+| `/course/:id`        | PATCH | Updates a specific course | Yes|
+| `/course/:id`        | DELETE | Deletes a specific course | Yes|
+| `/attendingcourses`        | GET | Retreives a specific courses that a user adds to their profile | Yes|
+| `/attendingcourses`        | POST | Adds a specific courses that a user adds to their profile | Yes|
+| `/attendingcourses/:id`        | POST | Deletes a specific courses that a user adds to their profile | Yes|
+| `/review/:courseId`        | POST |   Creates a review on a specific course| Yes|
+| `/review/:courseId/:reviewId`        | PATCH |   Updates a  specific review on a specific course| Yes|
+| `/review/:courseId/:reviewId`        | DELETE |   Deletes a  specific review on a specific course| Yes|
+| `/tags`        | GET |   Retrieves index of tags related to a specific course | No|
+| `/tags/:id`        | GET |   Retrieves a specific tag related to a specific course | No|
+| `/comments/:courseId/:reviewId`        | POST |   Creates a comment to a specific review that was left on a course | Yes|
+| `/comments/:courseId/:reviewId/:commentId`        | DELETE |   Deletes a specific comment to a specific review that was left on a course | Yes|
 
 
 
