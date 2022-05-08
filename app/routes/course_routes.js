@@ -260,7 +260,7 @@ router.delete('/courses/:id', requireToken, (req, res, next) => {
 	Course.findById(req.params.id)
 		.then(handle404)
 		.then((course) => {
-			requireOwnership(req, course)
+			// requireOwnership(req, course)
 			course.deleteOne()
 		})
 		// send back 204 and no content if the deletion succeeded
