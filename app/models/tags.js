@@ -14,4 +14,4 @@ const tagsSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Tag', tagsSchema)
+module.exports = mongoose.model('Tag', tagsSchema)  
